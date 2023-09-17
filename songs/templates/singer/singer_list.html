@@ -1,0 +1,5 @@
+{% for singer in singers %}
+<p1> {{ singer.id}} {{ singer.name}} {{ singer.lastname}}, |</p1>
+{% empty %}
+<p>No songs available</p>
+{% endfor %}
