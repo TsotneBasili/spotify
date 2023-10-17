@@ -9,12 +9,11 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -26,7 +25,6 @@ SECRET_KEY = 'django-insecure-7*v6^j@2s2)(epu^6ljs_ufo!_w#lw84^7=evlv4-lk@x$^wa)
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -48,6 +46,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'monitoring.middleware.SpotifyMonitoringMiddleware',
 ]
 
 ROOT_URLCONF = 'spotify.urls'
@@ -70,7 +69,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'spotify.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -81,6 +79,27 @@ DATABASES = {
     }
 }
 
+LOGGING = {
+    "version": 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {"format": "[%(levelname)s %(asctime)s %(message)s]"},
+        'simple': {"format": "[%(levelname)s %(asctime)s]"}
+    },
+    'handlers': {
+        'console': {
+            "class": 'logging.StreamHandler',
+            # "stream": sys.out,
+            'formatter': 'verbose',
+        }
+    },
+    'loggers': {
+        'root': {
+            'handlers': ['console'],
+            'level': 'INFO'
+        }
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -100,7 +119,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -111,7 +129,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
